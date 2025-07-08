@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %} Update UserInfo {% endblock title %}
+{% block body %}
+<div class="container my-3">
+    <h3>Update Your Information</h3>
+    <form id='UpUserform'>
+        <input type="hidden" id="u_id" value="{{ up_user.u_id }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{up_user.name}}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{up_user.email}}">
+        </div>
+        <div class="mb-3">
+            <label for="p_no" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" name="p_no" id="p_no" value="{{up_user.p_no}}">
+        </div>
+        <div class="mb-3">
+            <label for="b_date" class="form-label">BirthDate</label>
+            <input type="date" class="form-control" name="b_date" id="b_date"
+                value="{{ up_user.b_date.strftime('%Y-%m-%d') }}">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Update</button>
+    </form>
+</div>
+<script>
+    $(function () {
+        setupValidation('#UpUserform');
+        $('#UpUserform').submit(function (e) {
+            if (!$(this).valid()) {
+                return;
+            }
+            e.preventDefault();
+            const u_id = $('#u_id').val()
+            const formData = {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                p_no: $('#p_no').val(),
+                b_date: $('#b_date').val()
+            };
+            $.ajax({
+                url: `/api/updateuserapi/${u_id}`,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    alert('User Updated successfully!');
+                    window.location.href = '/';
+                },
+                error: function (xhr) {
+                    alert('Error: ' + xhr.responseJSON.error);
+                    console.error(xhr.responseJSON);
+                }
+            });
+        });
+    });
+</script>
+{% endblock body %}

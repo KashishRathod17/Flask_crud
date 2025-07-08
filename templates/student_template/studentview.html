@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %} Student Information {% endblock title %}
+{% block body %}
+   <div class="container my-3">
+    <h3>Add Your Information</h3>
+    <form action="/studentview" method="POST">
+        <div class="mb-3">
+            <label for="s_name" class="form-label">Student Name</label>
+            <input type="text" class="form-control" name="s_name" id="s_name">
+        </div>
+        <div class="mb-3">
+            <label for="sub1" class="form-label">Subject 1</label>
+            <input type="number" class="form-control" name="sub1" id="sub1">
+        </div>
+        <div class="mb-3">
+            <label for="sub2" class="form-label">Subject 2</label>
+            <input type="number" class="form-control" name="sub2" id="sub2">
+        </div>
+        <div class="mb-3">
+            <label for="sub3" class="form-label">Subject 3</label>
+            <input type="number" class="form-control" name="sub3" id="sub3">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </form>
+</div>
+<div class="container my-3">
+    <h3>User Information</h3>
+    {% if studentinfo|length == 0%}
+
+    <div class="alert alert-dark" role="alert">
+        No Records Found!
+    </div>
+
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Student Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Subject 1</th>
+                <th scope="col">Subject 2</th>
+                <th scope="col">Subject 3</th>
+                <th scope="col">Total</th>
+                <th scope="col">Percentage</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sv in studentinfo %}
+            <tr>
+                <!-- loop.index is used to show index number in incremental way -->
+                <th scope="row">{{loop.index}}</th>
+                <td>{{sv.s_name}}</td>
+                <td>{{sv.sub1}}</td>
+                <td>{{sv.sub2}}</td>
+                <td>{{sv.sub3}}</td>
+                <td>{{sv.total}}</td>
+                <td>{{sv.per}}</td>
+                <td>{{sv.status}}</td>
+                <td><a href="/updatestudent/{{sv.s_id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Update</a>
+                </td>                 
+                <td><a href="/deletestudent/{{sv.s_id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Delete</a>
+                </td> 
+                <!-- THIS BOTH WILL CALL THE ROUTES IN APP.PY AND IT THE REQUEST AS IT IS NOT A POST REQUEST SO ELSE PART GOT TRIGGERED AND THEN IT WILL RENDER 
+                UPDATEUSER PAGE AND WHEN UPDATE FORM GOT SUBMITTED AGAIN THIS USER WILL BE CALLED WITH NEW VALUES WHICH WILL 
+                UPDATE THE USERINFORMATION INTO THE DATABASE TABLE -->
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div> 
+{% endblock body %}

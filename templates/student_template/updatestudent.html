@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Update Student {% endblock title %}
+
+{% block body %}
+    <div class="container my-3">
+    <h3>Update Student Information</h3>
+    <form action="/updatestudent/{{up_st.s_id}}" method="POST">
+        <div class="mb-3">
+            <label for="s_name" class="form-label">Student Name</label>
+            <input type="text" class="form-control" name="s_name" id="s_name" value="{{up_st.s_name}}">
+        </div>
+        <div class="mb-3">
+            <label for="sub1" class="form-label">Subject 1</label>
+            <input type="number" class="form-control" name="sub1" id="sub1" value="{{up_st.sub1}}">
+        </div>
+        <div class="mb-3">
+            <label for="sub2" class="form-label">Subject 2</label>
+            <input type="number" class="form-control" name="sub2" id="sub2" value="{{up_st.sub2}}">
+        </div>
+        <div class="mb-3">
+            <label for="sub3" class="form-label">Subject 3</label>
+            <input type="number" class="form-control" name="sub3" id="sub3" value="{{up_st.sub3}}">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </form>
+</div>
+{% endblock body %}
